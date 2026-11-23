@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto — FreeGames AppzPlay</title>
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://freegames.appzplay.online/contacto.html">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="bg-[#0B0F19] text-slate-200 min-h-screen flex flex-col">
+
+  <header class="border-b border-slate-800 bg-[#0B0F19]/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2">
+        <span class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">⚡</span>
+        <span class="font-extrabold text-white text-lg tracking-wider">FreeGames <span class="text-xs text-indigo-400 font-normal">AppzPlay</span></span>
+      </a>
+      <a href="/" class="text-xs font-semibold text-slate-400 hover:text-white transition">← Volver al Inicio</a>
+    </div>
+  </header>
+
+  <main class="max-w-3xl mx-auto px-4 py-12 flex-grow">
+    <div class="text-center max-w-xl mx-auto mb-10">
+      <h1 class="text-3xl font-extrabold text-white mb-3">Ponte en Contacto</h1>
+      <p class="text-sm text-slate-400">
+        ¿Tienes dudas, sugerencias para nuevas tiendas o deseas reportar un enlace caído? Estamos a tu disposición.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+      <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl text-center">
+        <div class="text-2xl mb-2">📧</div>
+        <h3 class="text-xs font-bold uppercase text-slate-400">Correo Electrónico</h3>
+        <p class="text-sm font-semibold text-indigo-300 mt-1 break-all">contacto@appzplay.online</p>
+      </div>
+      <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl text-center">
+        <div class="text-2xl mb-2">⏱️</div>
+        <h3 class="text-xs font-bold uppercase text-slate-400">Tiempo de Respuesta</h3>
+        <p class="text-sm font-semibold text-emerald-400 mt-1">Menos de 24 horas</p>
+      </div>
+      <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl text-center">
+        <div class="text-2xl mb-2">🌐</div>
+        <h3 class="text-xs font-bold uppercase text-slate-400">Plataforma</h3>
+        <p class="text-sm font-semibold text-slate-300 mt-1">Red AppzPlay</p>
+      </div>
+    </div>
+
+    <!-- Formulario de contacto funcional o demostrativo -->
+    <div class="bg-slate-900/40 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl">
+      <form onsubmit="event.preventDefault(); alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo a la brevedad.'); this.reset();" class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Nombre Completo</label>
+          <input type="text" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition" placeholder="Tu nombre">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico</label>
+          <input type="email" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition" placeholder="tu@correo.com">
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Motivo del Mensaje</label>
+          <select class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-slate-300 focus:outline-none transition">
+            <option>Sugerencia de nueva oferta o tienda</option>
+            <option>Reportar enlace expirado o caído</option>
+            <option>Pregunta general sobre el servicio</option>
+            <option>Alianzas / Publicidad</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-bold text-slate-300 mb-1">Mensaje</label>
+          <textarea rows="4" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition" placeholder="Escribe tu mensaje aquí..."></textarea>
+        </div>
+        <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 transition">
+          Enviar Mensaje
+        </button>
+      </form>
+    </div>
+  </main>
+
+  <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
+    &copy; 2026 FreeGames AppzPlay — Todos los derechos reservados.
+  </footer>
+</body>
+</html>

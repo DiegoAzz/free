@@ -1,0 +1,32 @@
+name: Actualizar Regalos Automaticamente
+
+on:
+  schedule:
+    # Se ejecuta cada 6 horas todos los días
+    - cron: '0 */6 * * *'
+  workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
+
+jobs:
+  update-freebies:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Ejecutar recolector de APIs
+        run: |
+          cd radar-gratis
+          node fetcher.js
+
+      - name: Guardar cambios si hay nuevos regalos
+        run: |
+          git config --global user.name 'RadarCeroBot'
+          git config --global user.email 'bot@radarcero.com'
+          git add radar-gratis/data/freebies.json
+          git commit -m "chore: actualizar regalos y ofertas automaticas [skip ci]" || exit 0
+          git push

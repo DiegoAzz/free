@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>FreeGames AppzPlay — Videojuegos, Cursos y Software 100% Gratis</title>
+  <meta name="description" content="Rastreador en vivo de juegos gratis de PC, Steam, Epic Games, PlayStation, Xbox, skins, cursos y software profesional. Reclámalos a $0.00 antes de que expiren.">
+  <link rel="canonical" href="https://freegames.appzplay.online/">
+  
+  <!-- Open Graph / Redes Sociales -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://freegames.appzplay.online/">
+  <meta property="og:title" content="FreeGames AppzPlay — Chollos y Juegos 100% Gratis">
+  <meta property="og:description" content="Reclama videojuegos oficiales de Epic Games, Steam, consolas y cursos gratis hoy.">
+  <meta property="og:image" content="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1200">
+
+  <!-- ============================================================ -->
+  <!-- GOOGLE ADSENSE: Cuando te den tu código ca-pub-XXXX, ponlo aquí -->
+  <!-- <meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX"> -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
+  <!-- ============================================================ -->
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              dark: '#0B0F19',
+              card: '#111827',
+              border: '#1F2937',
+              accent: '#6366F1',
+              neon: '#10B981',
+              pink: '#EC4899',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glow-neon { box-shadow: 0 0 25px -5px rgba(16, 185, 129, 0.4); }
+  </style>
+</head>
+<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col antialiased selection:bg-brand-accent selection:text-white">
+
+  <!-- ================= NAVBAR ================= -->
+  <header class="border-b border-brand-border bg-brand-dark/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-brand-accent to-brand-neon flex items-center justify-center font-black text-xl text-white shadow-lg shadow-indigo-500/30">
+          ⚡
+        </div>
+        <div>
+          <span class="text-xl font-black tracking-wider bg-clip-text text-transparent bg-gradient-to-r from-white via-indigo-200 to-indigo-400">
+            FreeGames
+          </span>
+          <span class="hidden sm:inline-block ml-2 px-2 py-0.5 text-[10px] font-bold tracking-widest uppercase bg-indigo-500/20 text-indigo-300 rounded-full border border-indigo-500/30">
+            AppzPlay
+          </span>
+        </div>
+      </a>
+
+      <!-- Stats Bar (Ahorrómetro) -->
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <div class="flex items-center gap-2 bg-emerald-500/10 border border-emerald-500/20 px-3.5 py-1.5 rounded-full">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span class="text-emerald-400 font-bold" id="stat-count">Cargando...</span>
+          <span class="text-slate-400">regalos activos</span>
+        </div>
+        <div class="flex items-center gap-2 bg-indigo-500/10 border border-indigo-500/20 px-3.5 py-1.5 rounded-full">
+          <span class="text-indigo-400 font-bold" id="stat-savings">Calculando...</span>
+          <span class="text-slate-400">ahorrados hoy</span>
+        </div>
+      </div>
+
+      <!-- Botón de Actualizar -->
+      <div class="flex items-center gap-3">
+        <button id="btn-refresh" class="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white bg-slate-800/80 hover:bg-slate-700 rounded-lg border border-slate-700 transition flex items-center gap-1.5" title="Actualizar datos">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          <span class="hidden sm:inline">Refrescar</span>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="relative pt-12 pb-6 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto text-center">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 text-xs font-semibold mb-4">
+      <span>🎯 Sistema Automatizado de Regalos y Promociones Oficiales</span>
+    </div>
+    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-white max-w-4xl mx-auto leading-tight">
+      Todos los juegos y herramientas que están <span class="bg-clip-text text-transparent bg-gradient-to-r from-emerald-400 via-teal-300 to-indigo-400">regalando a $0.00</span>
+    </h1>
+    <p class="mt-3 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto">
+      Rastreamos las tiendas digitales (Epic Games, Steam, PlayStation, Xbox, Harvard, Google) para que reclames licencias originales sin gastar dinero.
+    </p>
+
+    <!-- Espacio para Banner Superior de AdSense (728x90) -->
+    <div class="mt-8 max-w-4xl mx-auto">
+      <div class="border border-dashed border-slate-800 bg-slate-900/40 rounded-xl p-4 text-center text-xs text-slate-500">
+        <!-- ADSENSE SLOT: HEADER LEADERBOARD -->
+        <span>[ Espacio Reservado para Google AdSense — Banner Leaderboard 728x90 ]</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FILTROS Y BUSCADOR ================= -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8">
+    <div class="bg-brand-card border border-brand-border rounded-2xl p-4 sm:p-6 shadow-xl">
+      
+      <!-- Fila 1: Buscador y Categorías -->
+      <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center justify-between">
+        
+        <!-- Categorías (Tabs) -->
+        <div class="flex flex-wrap items-center gap-2" id="category-tabs">
+          <button data-cat="all" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-brand-accent text-white shadow-lg shadow-indigo-500/30">
+            🌟 Todos (<span id="count-all">0</span>)
+          </button>
+          <button data-cat="juegos" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800/80 hover:bg-slate-700 text-slate-300">
+            🎮 Juegos (<span id="count-juegos">0</span>)
+          </button>
+          <button data-cat="loot" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800/80 hover:bg-slate-700 text-slate-300">
+            🎁 Skins & Loot (<span id="count-loot">0</span>)
+          </button>
+          <button data-cat="cursos" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800/80 hover:bg-slate-700 text-slate-300">
+            🎓 Cursos (<span id="count-cursos">0</span>)
+          </button>
+          <button data-cat="software" class="cat-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800/80 hover:bg-slate-700 text-slate-300">
+            💻 Software (<span id="count-software">0</span>)
+          </button>
+        </div>
+
+        <!-- Buscador -->
+        <div class="relative min-w-[260px]">
+          <input type="text" id="search-input" placeholder="Buscar por título o tienda..." 
+            class="w-full bg-slate-900 border border-slate-700 focus:border-brand-accent rounded-xl px-4 py-2.5 pl-10 text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none transition">
+          <svg class="w-4 h-4 text-slate-500 absolute left-3.5 top-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        </div>
+
+      </div>
+
+      <!-- Fila 2: Filtros por Plataforma -->
+      <div class="mt-4 pt-4 border-t border-slate-800 flex flex-wrap items-center gap-2 text-xs">
+        <span class="text-slate-500 font-semibold mr-1">Plataforma:</span>
+        <button data-plat="all" class="plat-btn px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-medium">Todas</button>
+        <button data-plat="epic" class="plat-btn px-2.5 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition font-medium">Epic Games</button>
+        <button data-plat="steam" class="plat-btn px-2.5 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition font-medium">Steam</button>
+        <button data-plat="playstation" class="plat-btn px-2.5 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition font-medium">PlayStation</button>
+        <button data-plat="xbox" class="plat-btn px-2.5 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition font-medium">Xbox</button>
+        <button data-plat="android" class="plat-btn px-2.5 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition font-medium">Móviles</button>
+        <button data-plat="pc" class="plat-btn px-2.5 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition font-medium">PC General</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= GRID DE REGALOS ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-grow">
+    
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-xl font-bold text-white flex items-center gap-2">
+        <span>🔥 Ofertas y Regalos Activos</span>
+        <span id="results-count" class="text-xs px-2.5 py-0.5 rounded-full bg-slate-800 text-slate-400 font-normal">0 encontrados</span>
+      </h2>
+      <span class="text-xs text-slate-500" id="last-updated">Cargando...</span>
+    </div>
+
+    <!-- Contenedor dinámico de Tarjetas -->
+    <div id="cards-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Se inyectan con JavaScript -->
+    </div>
+
+    <!-- Estado vacío -->
+    <div id="empty-state" class="hidden text-center py-20">
+      <div class="text-5xl mb-4">🔍</div>
+      <h3 class="text-lg font-bold text-white">No encontramos regalos con ese filtro</h3>
+      <p class="text-sm text-slate-400 mt-1">Prueba seleccionando otra categoría o limpiando el buscador.</p>
+      <button onclick="resetFilters()" class="mt-4 px-4 py-2 bg-brand-accent text-white text-xs font-bold rounded-xl">Restablecer Filtros</button>
+    </div>
+
+  </main>
+
+  <!-- ================= SECCIÓN EDITORIAL & FAQ (CLAVE PARA APROBACIÓN GOOGLE ADSENSE) ================= -->
+  <section class="border-t border-brand-border bg-slate-950/60 py-16 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-5xl mx-auto">
+      
+      <div class="text-center max-w-2xl mx-auto mb-12">
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">
+          Guía del Ahorro Digital & Preguntas Frecuentes
+        </h2>
+        <p class="text-sm text-slate-400 mt-2">
+          Todo lo que necesitas saber sobre cómo funcionan las promociones legales a coste cero en internet.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        
+        <div class="bg-brand-card border border-brand-border p-6 rounded-2xl">
+          <h3 class="font-bold text-emerald-400 text-base mb-2">¿Los juegos regalados son para siempre?</h3>
+          <p class="text-slate-300 leading-relaxed">
+            <strong>Sí, en el 95% de los casos.</strong> Cuando tiendas como Epic Games Store, Steam o GOG regalan un juego y lo añades a tu biblioteca mientras la promoción está activa, la licencia queda vinculada permanentemente a tu cuenta de usuario como si la hubieras comprado.
+          </p>
+        </div>
+
+        <div class="bg-brand-card border border-brand-border p-6 rounded-2xl">
+          <h3 class="font-bold text-indigo-400 text-base mb-2">¿Cuándo se renuevan los juegos gratis?</h3>
+          <p class="text-slate-300 leading-relaxed">
+            <strong>Epic Games Store</strong> renueva su selección todos los <strong>jueves a las 10:00 AM (hora Colombia/México)</strong>. En Steam y GOG, las promociones suelen aparecer de forma imprevista durante eventos de fin de semana o festivales temáticos. Nuestro robot rastrea estos cambios cada 4 horas.
+          </p>
+        </div>
+
+        <div class="bg-brand-card border border-brand-border p-6 rounded-2xl">
+          <h3 class="font-bold text-indigo-400 text-base mb-2">¿Por qué las empresas regalan juegos y cursos?</h3>
+          <p class="text-slate-300 leading-relaxed">
+            Las compañías utilizan las promociones gratuitas como estrategia para atraer nuevos usuarios a sus lanzadores y ecosistemas (como hace Epic Games para competir con Steam). En el caso de universidades y cursos, liberan contenido introductorio para captar alumnos interesados en certificaciones avanzadas.
+          </p>
+        </div>
+
+        <div class="bg-brand-card border border-brand-border p-6 rounded-2xl">
+          <h3 class="font-bold text-emerald-400 text-base mb-2">¿Cómo garantizan que no hay virus ni piratería?</h3>
+          <p class="text-slate-300 leading-relaxed">
+            En <strong>FreeGames AppzPlay</strong> no almacenamos ejecutables ni archivos modificados. Cada botón de "Reclamar" te redirige a los servidores y dominios oficiales de las tiendas (store.epicgames.com, store.steampowered.com, edx.org, etc.), asegurando un proceso 100% legal y seguro.
+          </p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= FOOTER COMPLETO (COMPLIANCE ADSENSE) ================= -->
+  <footer class="border-t border-brand-border bg-brand-card/90">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        
+        <div class="md:col-span-2">
+          <div class="flex items-center gap-2">
+            <span class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white font-bold">⚡</span>
+            <span class="font-extrabold text-white text-lg tracking-wider">FreeGames <span class="text-xs text-indigo-400 font-normal">AppzPlay</span></span>
+          </div>
+          <p class="mt-3 text-xs text-slate-400 max-w-sm leading-relaxed">
+            FreeGames AppzPlay es una plataforma automatizada independiente que rastrea ofertas legales y promociones al 100% de descuento en tiendas digitales de videojuegos y software oficial.
+          </p>
+          <p class="mt-2 text-[11px] text-slate-500">
+            Todas las marcas registradas pertenecen a sus respectivos propietarios (Valve Corporation, Epic Games Inc, Google LLC, Harvard University, etc.).
+          </p>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Categorías</h4>
+          <ul class="mt-3 space-y-2 text-xs text-slate-400">
+            <li><a href="#" onclick="document.querySelector('[data-cat=juegos]').click(); return false;" class="hover:text-emerald-400 transition">Juegos Completos</a></li>
+            <li><a href="#" onclick="document.querySelector('[data-cat=loot]').click(); return false;" class="hover:text-emerald-400 transition">Skins y Recompensas</a></li>
+            <li><a href="#" onclick="document.querySelector('[data-cat=cursos]').click(); return false;" class="hover:text-emerald-400 transition">Cursos Certificados</a></li>
+            <li><a href="#" onclick="document.querySelector('[data-cat=software]').click(); return false;" class="hover:text-emerald-400 transition">Software Profesional</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4 class="text-xs font-bold uppercase tracking-wider text-slate-300">Páginas Legales</h4>
+          <ul class="mt-3 space-y-2 text-xs text-slate-400">
+            <li><a href="/quienes-somos.html" class="hover:text-white transition">Quiénes Somos</a></li>
+            <li><a href="/politica-de-privacidad.html" class="hover:text-white transition">Política de Privacidad</a></li>
+            <li><a href="/terminos-y-condiciones.html" class="hover:text-white transition">Términos y Condiciones</a></li>
+            <li><a href="/aviso-legal.html" class="hover:text-white transition">Aviso Legal & Afiliados</a></li>
+            <li><a href="/contacto.html" class="hover:text-white transition">Contacto</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="mt-8 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+        <div>
+          &copy; 2026 FreeGames AppzPlay (<a href="https://freegames.appzplay.online" class="underline hover:text-slate-400">freegames.appzplay.online</a>). Todos los derechos reservados.
+        </div>
+        <div class="flex items-center gap-4">
+          <a href="/sitemap.xml" class="hover:text-slate-400 transition">Sitemap XML</a>
+          <a href="/robots.txt" class="hover:text-slate-400 transition">Robots.txt</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ================= BANNER DE CONSENTIMIENTO DE COOKIES (GDPR) ================= -->
+  <div id="cookie-banner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-4 sm:max-w-md bg-slate-900 border border-slate-800 p-4 rounded-2xl shadow-2xl z-50 flex flex-col gap-3">
+    <div class="text-xs text-slate-300 leading-relaxed">
+      🍪 Utilizamos cookies técnicas y publicitarias de Google AdSense para personalizar anuncios y analizar el tráfico web. Consulta nuestra <a href="/politica-de-privacidad.html" class="text-indigo-400 underline">Política de Privacidad</a>.
+    </div>
+    <div class="flex items-center gap-2">
+      <button onclick="acceptCookies()" class="flex-1 py-1.5 px-3 bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold rounded-lg transition">Aceptar</button>
+      <button onclick="acceptCookies()" class="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold rounded-lg transition">Rechazar</button>
+    </div>
+  </div>
+
+  <!-- ================= SCRIPTS ================= -->
+  <script>
+    let allItems = [];
+    let currentCategory = 'all';
+    let currentPlatform = 'all';
+    let searchQuery = '';
+
+    const container = document.getElementById('cards-container');
+    const emptyState = document.getElementById('empty-state');
+    const searchInput = document.getElementById('search-input');
+    const resultsCount = document.getElementById('results-count');
+
+    // Cookie Consent
+    function acceptCookies() {
+      localStorage.setItem('cookies_accepted', 'true');
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+    if (localStorage.getItem('cookies_accepted') === 'true') {
+      document.getElementById('cookie-banner').style.display = 'none';
+    }
+
+    async function loadData() {
+      try {
+        const res = await fetch('/api/freebies');
+        if (!res.ok) throw new Error('Error al cargar datos');
+        const data = await res.json();
+        
+        allItems = data.items || [];
+        
+        document.getElementById('stat-count').innerText = data.totalCount || allItems.length;
+        document.getElementById('stat-savings').innerText = `$${(data.estimatedSavingsUSD || 2200).toLocaleString('en-US')} USD`;
+        
+        const date = new Date(data.updatedAt);
+        document.getElementById('last-updated').innerText = `Actualizado: ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+
+        updateCategoryCounts();
+        renderCards();
+      } catch (err) {
+        console.error('Error cargando regalos:', err);
+      }
+    }
+
+    function updateCategoryCounts() {
+      const counts = { all: allItems.length, juegos: 0, loot: 0, cursos: 0, software: 0 };
+      allItems.forEach(i => {
+        if (counts[i.category] !== undefined) counts[i.category]++;
+      });
+      document.getElementById('count-all').innerText = counts.all;
+      document.getElementById('count-juegos').innerText = counts.juegos;
+      document.getElementById('count-loot').innerText = counts.loot;
+      document.getElementById('count-cursos').innerText = counts.cursos;
+      document.getElementById('count-software').innerText = counts.software;
+    }
+
+    function renderCards() {
+      const q = searchQuery.toLowerCase().trim();
+      
+      const filtered = allItems.filter(item => {
+        if (currentCategory !== 'all' && item.category !== currentCategory) return false;
+        
+        if (currentPlatform !== 'all') {
+          const platLower = (item.platform || '').toLowerCase();
+          if (currentPlatform === 'epic' && !platLower.includes('epic')) return false;
+          if (currentPlatform === 'steam' && !platLower.includes('steam')) return false;
+          if (currentPlatform === 'playstation' && !platLower.includes('playstation') && !platLower.includes('ps4') && !platLower.includes('ps5')) return false;
+          if (currentPlatform === 'xbox' && !platLower.includes('xbox')) return false;
+          if (currentPlatform === 'android' && !platLower.includes('android') && !platLower.includes('ios')) return false;
+          if (currentPlatform === 'pc' && !platLower.includes('pc')) return false;
+        }
+
+        if (q) {
+          const titleMatch = (item.title || '').toLowerCase().includes(q);
+          const descMatch = (item.description || '').toLowerCase().includes(q);
+          const platMatch = (item.platform || '').toLowerCase().includes(q);
+          if (!titleMatch && !descMatch && !platMatch) return false;
+        }
+
+        return true;
+      });
+
+      resultsCount.innerText = `${filtered.length} encontrados`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        emptyState.classList.remove('hidden');
+        return;
+      }
+
+      emptyState.classList.add('hidden');
+
+      container.innerHTML = filtered.map((item, index) => {
+        const isUpcoming = item.status === 'upcoming';
+        const categoryBadgeColors = {
+          juegos: 'bg-indigo-500/20 text-indigo-300 border-indigo-500/30',
+          loot: 'bg-amber-500/20 text-amber-300 border-amber-500/30',
+          cursos: 'bg-emerald-500/20 text-emerald-300 border-emerald-500/30',
+          software: 'bg-sky-500/20 text-sky-300 border-sky-500/30',
+          betas: 'bg-purple-500/20 text-purple-300 border-purple-500/30'
+        };
+        const catBadge = categoryBadgeColors[item.category] || categoryBadgeColors.juegos;
+
+        // Banner publicitario nativo intercalado cada 8 tarjetas para AdSense
+        let adCard = '';
+        if (index > 0 && index % 8 === 0) {
+          adCard = `
+            <div class="bg-slate-900/60 border border-dashed border-slate-700/80 rounded-2xl p-5 flex flex-col items-center justify-center text-center">
+              <span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-2">Publicidad Patrocinada</span>
+              <div class="w-full h-48 bg-slate-800/40 rounded-xl flex items-center justify-center text-xs text-slate-500">
+                [ Espacio Google AdSense — In-Feed Card ]
+              </div>
+            </div>
+          `;
+        }
+
+        return `
+          ${adCard}
+          <div class="bg-brand-card border border-brand-border hover:border-brand-accent/50 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-indigo-500/10 flex flex-col">
+            
+            <div class="relative aspect-video w-full overflow-hidden bg-slate-950">
+              <img src="${item.thumbnail || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600'}" 
+                   alt="${escapeHtml(item.title)}" 
+                   class="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
+                   loading="lazy"
+                   onerror="this.src='https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600'">
+              
+              <span class="absolute top-2.5 left-2.5 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider rounded-lg border backdrop-blur-md ${catBadge}">
+                ${item.category}
+              </span>
+
+              <span class="absolute top-2.5 right-2.5 px-2.5 py-1 text-[11px] font-black rounded-lg backdrop-blur-md ${isUpcoming ? 'bg-amber-500 text-slate-950' : 'bg-emerald-500 text-slate-950 glow-neon'}">
+                ${isUpcoming ? 'PRÓXIMAMENTE' : '¡100% GRATIS!'}
+              </span>
+            </div>
+
+            <div class="p-4 sm:p-5 flex flex-col flex-grow">
+              
+              <div class="text-[11px] font-semibold text-slate-400 flex items-center gap-1.5 mb-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-indigo-400"></span>
+                <span class="truncate">${escapeHtml(item.platform || 'Multiplataforma')}</span>
+              </div>
+
+              <h3 class="text-sm sm:text-base font-bold text-white line-clamp-2 leading-snug hover:text-indigo-300 transition" title="${escapeHtml(item.title)}">
+                ${escapeHtml(item.title)}
+              </h3>
+
+              <div class="mt-3 flex items-center gap-2">
+                <span class="text-xs text-slate-500 line-through">
+                  ${escapeHtml(item.originalPrice || '')}
+                </span>
+                <span class="text-sm font-extrabold text-emerald-400">
+                  $0.00
+                </span>
+                <span class="ml-auto text-[10px] px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-300 font-bold border border-emerald-500/20">
+                  Ahorras 100%
+                </span>
+              </div>
+
+              <div class="mt-4 pt-3 border-t border-slate-800/80 mt-auto">
+                <a href="${escapeHtml(item.claimUrl)}" target="_blank" rel="noopener noreferrer"
+                   class="w-full py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${isUpcoming ? 'bg-slate-800 text-slate-400 hover:bg-slate-700' : 'bg-gradient-to-r from-brand-accent to-indigo-600 hover:from-indigo-500 hover:to-indigo-600 text-white shadow-md shadow-indigo-500/20'}">
+                  <span>${isUpcoming ? 'Ver Próximo Estreno' : 'Reclamar Gratis'}</span>
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+                </a>
+              </div>
+
+            </div>
+
+          </div>
+        `;
+      }).join('');
+    }
+
+    document.querySelectorAll('.cat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.cat-btn').forEach(b => {
+          b.className = 'cat-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-slate-800/80 hover:bg-slate-700 text-slate-300';
+        });
+        btn.className = 'cat-btn px-4 py-2 rounded-xl text-xs font-bold transition bg-brand-accent text-white shadow-lg shadow-indigo-500/30';
+        currentCategory = btn.getAttribute('data-cat');
+        renderCards();
+      });
+    });
+
+    document.querySelectorAll('.plat-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.plat-btn').forEach(b => {
+          b.className = 'plat-btn px-2.5 py-1 rounded-lg bg-slate-800 text-slate-400 hover:text-white transition font-medium';
+        });
+        btn.className = 'plat-btn px-2.5 py-1 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-medium';
+        currentPlatform = btn.getAttribute('data-plat');
+        renderCards();
+      });
+    });
+
+    searchInput.addEventListener('input', (e) => {
+      searchQuery = e.target.value;
+      renderCards();
+    });
+
+    document.getElementById('btn-refresh').addEventListener('click', async () => {
+      const btn = document.getElementById('btn-refresh');
+      btn.innerHTML = `<span class="animate-spin inline-block">⏳</span>`;
+      try {
+        await fetch('/api/refresh', { method: 'POST' });
+        await loadData();
+      } catch (e) {
+        console.error(e);
+      } finally {
+        btn.innerHTML = `
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          <span class="hidden sm:inline">Refrescar</span>
+        `;
+      }
+    });
+
+    function resetFilters() {
+      currentCategory = 'all';
+      currentPlatform = 'all';
+      searchQuery = '';
+      searchInput.value = '';
+      document.querySelector('[data-cat="all"]').click();
+      document.querySelector('[data-plat="all"]').click();
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    loadData();
+  </script>
+</body>
+</html>

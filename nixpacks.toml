@@ -1,0 +1,9 @@
+# nixpacks.toml para Coolify
+[phases.setup]
+nixPkgs = ["nodejs_20"]
+
+[phases.build]
+cmds = ["node fetcher.js || true"]
+
+[start]
+cmd = "node server.js"

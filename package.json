@@ -1,0 +1,12 @@
+{
+  "name": "radar-gratis",
+  "version": "1.0.0",
+  "description": "El agregador definitivo de juegos, cursos y software 100% gratis",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "fetch": "node fetcher.js"
+  },
+  "keywords": ["gaming", "freebies", "adsense", "deals", "giveaways"]
+}
