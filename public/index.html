@@ -107,14 +107,6 @@
     <p class="mt-3 text-base sm:text-lg text-slate-400 max-w-2xl mx-auto">
       Rastreamos las tiendas digitales (Epic Games, Steam, PlayStation, Xbox, Harvard, Google) para que reclames licencias originales sin gastar dinero.
     </p>
-
-    <!-- Espacio para Banner Superior de AdSense (728x90) -->
-    <div class="mt-8 max-w-4xl mx-auto">
-      <div class="border border-dashed border-slate-800 bg-slate-900/40 rounded-xl p-4 text-center text-xs text-slate-500">
-        <!-- ADSENSE SLOT: HEADER LEADERBOARD -->
-        <span>[ Espacio Reservado para Google AdSense — Banner Leaderboard 728x90 ]</span>
-      </div>
-    </div>
   </section>
 
   <!-- ================= FILTROS Y BUSCADOR ================= -->
@@ -406,21 +398,7 @@
         };
         const catBadge = categoryBadgeColors[item.category] || categoryBadgeColors.juegos;
 
-        // Banner publicitario nativo intercalado cada 8 tarjetas para AdSense
-        let adCard = '';
-        if (index > 0 && index % 8 === 0) {
-          adCard = `
-            <div class="bg-slate-900/60 border border-dashed border-slate-700/80 rounded-2xl p-5 flex flex-col items-center justify-center text-center">
-              <span class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-2">Publicidad Patrocinada</span>
-              <div class="w-full h-48 bg-slate-800/40 rounded-xl flex items-center justify-center text-xs text-slate-500">
-                [ Espacio Google AdSense — In-Feed Card ]
-              </div>
-            </div>
-          `;
-        }
-
         return `
-          ${adCard}
           <div class="bg-brand-card border border-brand-border hover:border-brand-accent/50 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-indigo-500/10 flex flex-col">
             
             <div class="relative aspect-video w-full overflow-hidden bg-slate-950">
@@ -434,8 +412,8 @@
                 ${item.category}
               </span>
 
-              <span class="absolute top-2.5 right-2.5 px-2.5 py-1 text-[11px] font-black rounded-lg backdrop-blur-md ${isUpcoming ? 'bg-amber-500 text-slate-950' : 'bg-emerald-500 text-slate-950 glow-neon'}">
-                ${isUpcoming ? 'PRÓXIMAMENTE' : '¡100% GRATIS!'}
+              <span class="absolute top-2.5 right-2.5 px-2.5 py-1 text-[11px] font-black rounded-lg backdrop-blur-md ${isUpcoming ? 'bg-amber-500/90 text-slate-950 font-bold' : 'bg-emerald-500 text-slate-950 glow-neon'}">
+                ${isUpcoming ? '⏳ PRÓXIMAMENTE' : '🔥 ¡GRATIS HOY!'}
               </span>
             </div>
 
@@ -465,7 +443,7 @@
               <div class="mt-4 pt-3 border-t border-slate-800/80 mt-auto">
                 <a href="${escapeHtml(item.claimUrl)}" target="_blank" rel="noopener noreferrer"
                    class="w-full py-2.5 px-4 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 ${isUpcoming ? 'bg-slate-800 text-slate-400 hover:bg-slate-700' : 'bg-gradient-to-r from-brand-accent to-indigo-600 hover:from-indigo-500 hover:to-indigo-600 text-white shadow-md shadow-indigo-500/20'}">
-                  <span>${isUpcoming ? 'Ver Próximo Estreno' : 'Reclamar Gratis'}</span>
+                  <span>${isUpcoming ? 'Ver Próxima Fecha' : 'Reclamar Gratis en Tienda'}</span>
                   <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
                 </a>
               </div>

@@ -180,7 +180,12 @@ export async function runFetcher() {
   ]);
 
   const curated = getCuratedCoursesAndTools();
-  const allItems = [...epicItems, ...gamerPowerItems, ...curated];
+  const rawItems = [...epicItems, ...gamerPowerItems, ...curated];
+
+  // Separar y priorizar: Primero los que están 100% activos para reclamar HOY, al final los próximos estrenos
+  const activeItems = rawItems.filter(i => i.status !== 'upcoming');
+  const upcomingItems = rawItems.filter(i => i.status === 'upcoming');
+  const allItems = [...activeItems, ...upcomingItems];
 
   // Calcular ahorro total estimado
   let totalSavingsUSD = 0;
