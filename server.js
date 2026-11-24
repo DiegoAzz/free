@@ -16,11 +16,38 @@ const PUBLIC_DIR = path.join(__dirname, 'public');
 const DATA_FILE = path.join(__dirname, 'data', 'freebies.json');
 const STATS_FILE = path.join(__dirname, 'data', 'stats.json');
 
-// Motor ligero de análisis de tráfico interno
+// Memoria de visitantes recientes para contar únicamente VISITAS ÚNICAS reales (1 visita por IP cada 30 min)
+const recentVisitors = new Map();
+
+// Motor inteligente de análisis de tráfico interno
 function trackVisit(req, pathname) {
-  if (pathname.startsWith('/api') || (pathname.includes('.') && !pathname.endsWith('.html'))) return;
-  if (pathname.includes('stats')) return; // No contar visitas al propio panel
+  // 1. Ignorar APIs, panel de stats, healthcheck de Coolify y recursos estáticos
+  if (pathname === '/healthz' || pathname.startsWith('/api') || pathname.includes('stats') || pathname.includes('health')) return;
+  if (pathname.includes('.') && !pathname.endsWith('.html')) return;
+
+  const userAgent = (req.headers['user-agent'] || '').toLowerCase();
   
+  // 2. Ignorar bots, robots de rastreo, healthchecks y curl
+  if (/curl|wget|uptime|healthcheck|bot|crawl|spider|slurp|facebookexternalhit/.test(userAgent)) return;
+
+  // 3. Ignorar al administrador si tiene la cookie de admin activada
+  const cookie = req.headers['cookie'] || '';
+  if (cookie.includes('freegames_admin=1')) return;
+
+  // 4. IP real del usuario (respetando proxies inversos de Coolify/Traefik)
+  const clientIp = (req.headers['x-forwarded-for'] || req.socket?.remoteAddress || 'unknown').split(',')[0].trim();
+  const now = Date.now();
+  
+  // Si la misma persona recarga la página dentro de 30 minutos, NO se cuenta como visita nueva
+  const lastVisit = recentVisitors.get(clientIp);
+  if (lastVisit && (now - lastVisit < 30 * 60 * 1000)) {
+    return;
+  }
+  recentVisitors.set(clientIp, now);
+
+  // Limpieza periódica de memoria de IPs
+  if (recentVisitors.size > 5000) recentVisitors.clear();
+
   const today = new Date().toISOString().split('T')[0];
   const refHeader = (req.headers['referer'] || req.headers['referrer'] || '').toLowerCase();
   let source = 'Directo / Otro';
@@ -29,7 +56,6 @@ function trackVisit(req, pathname) {
   else if (refHeader.includes('whatsapp')) source = 'WhatsApp';
   else if (refHeader.includes('google')) source = 'Google';
 
-  const userAgent = (req.headers['user-agent'] || '').toLowerCase();
   const isMobile = /mobile|iphone|android|ipad/.test(userAgent);
 
   let stats = { totalViews: 0, byDate: {}, sources: {}, devices: { mobile: 0, desktop: 0 } };
@@ -141,6 +167,21 @@ const server = http.createServer(async (req, res) => {
         res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
         res.end(JSON.stringify({ totalViews: 0, byDate: {}, sources: {}, devices: { mobile: 0, desktop: 0 } }));
       }
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: err.message }));
+    }
+    return;
+  }
+
+  // API: Resetear contador de estadísticas a 0
+  if (url.pathname === '/api/stats/reset' && req.method === 'POST') {
+    try {
+      const emptyStats = { totalViews: 0, byDate: {}, sources: {}, devices: { mobile: 0, desktop: 0 } };
+      fs.writeFileSync(STATS_FILE, JSON.stringify(emptyStats, null, 2), 'utf8');
+      recentVisitors.clear();
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ success: true, message: 'Contador reseteado a 0' }));
     } catch (err) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: err.message }));

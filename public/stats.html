@@ -23,9 +23,17 @@
           <p class="text-xs text-slate-400">Estadísticas internas en tiempo real sin necesidad de entrar a Google</p>
         </div>
       </div>
-      <button onclick="loadStats()" class="px-3.5 py-2 text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl border border-slate-700 transition flex items-center gap-1.5">
-        <span>🔄 Recargar</span>
-      </button>
+      <div class="flex items-center gap-2">
+        <button id="btn-admin-filter" onclick="toggleAdminFilter()" class="px-3 py-1.5 text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl border border-slate-700 transition">
+          🛡️ Ignorar mis visitas
+        </button>
+        <button onclick="resetStats()" class="px-3 py-1.5 text-xs font-bold bg-red-950/40 hover:bg-red-900/60 text-red-300 rounded-xl border border-red-800/60 transition" title="Reiniciar contador a 0">
+          🧹 Limpiar
+        </button>
+        <button onclick="loadStats()" class="px-3 py-1.5 text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl shadow transition">
+          🔄
+        </button>
+      </div>
     </div>
 
     <!-- Tarjetas Principales -->
@@ -165,6 +173,46 @@
       }
     }
 
+    async function resetStats() {
+      if (!confirm('¿Estás seguro de que deseas reiniciar el contador a 0?')) return;
+      try {
+        const res = await fetch('/api/stats/reset', { method: 'POST' });
+        if (res.ok) {
+          alert('✅ Contador reiniciado a 0.');
+          loadStats();
+        }
+      } catch (e) {
+        alert('Error al reiniciar.');
+      }
+    }
+
+    function checkAdminStatus() {
+      const btn = document.getElementById('btn-admin-filter');
+      const isIgnoring = document.cookie.includes('freegames_admin=1');
+      if (isIgnoring) {
+        btn.innerText = '🛡️ Modo Dueño ACTIVO (No te cuenta)';
+        btn.classList.add('bg-emerald-600', 'text-white', 'border-emerald-500');
+        btn.classList.remove('bg-slate-800', 'text-slate-300');
+      } else {
+        btn.innerText = '🛡️ Ignorar mis visitas';
+        btn.classList.remove('bg-emerald-600', 'text-white', 'border-emerald-500');
+        btn.classList.add('bg-slate-800', 'text-slate-300');
+      }
+    }
+
+    function toggleAdminFilter() {
+      const isIgnoring = document.cookie.includes('freegames_admin=1');
+      if (isIgnoring) {
+        document.cookie = 'freegames_admin=0; path=/; max-age=0';
+        alert('Ahora tus visitas SÍ se contarán en las estadísticas.');
+      } else {
+        document.cookie = 'freegames_admin=1; path=/; max-age=31536000';
+        alert('✅ ¡Modo Dueño activado! A partir de ahora cuando navegues en la tienda o abras enlaces, tus visitas no alterarán el contador.');
+      }
+      checkAdminStatus();
+    }
+
+    checkAdminStatus();
     loadStats();
     setInterval(loadStats, 10000); // Refresca solo cada 10 segundos
   </script>
