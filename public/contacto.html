@@ -30,53 +30,102 @@
       </p>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-      <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl text-center">
-        <div class="text-2xl mb-2">📧</div>
-        <h3 class="text-xs font-bold uppercase text-slate-400">Correo Electrónico</h3>
-        <p class="text-sm font-semibold text-indigo-300 mt-1 break-all">contacto@appzplay.online</p>
-      </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
       <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl text-center">
         <div class="text-2xl mb-2">⏱️</div>
         <h3 class="text-xs font-bold uppercase text-slate-400">Tiempo de Respuesta</h3>
         <p class="text-sm font-semibold text-emerald-400 mt-1">Menos de 24 horas</p>
       </div>
       <div class="bg-slate-900/60 border border-slate-800 p-5 rounded-2xl text-center">
-        <div class="text-2xl mb-2">🌐</div>
-        <h3 class="text-xs font-bold uppercase text-slate-400">Plataforma</h3>
-        <p class="text-sm font-semibold text-slate-300 mt-1">Red AppzPlay</p>
+        <div class="text-2xl mb-2">🛡️</div>
+        <h3 class="text-xs font-bold uppercase text-slate-400">Atención Directa</h3>
+        <p class="text-sm font-semibold text-indigo-300 mt-1">Equipo FreeGames</p>
       </div>
     </div>
 
-    <!-- Formulario de contacto funcional o demostrativo -->
-    <div class="bg-slate-900/40 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl">
-      <form onsubmit="event.preventDefault(); alert('¡Gracias por tu mensaje! Nos pondremos en contacto contigo a la brevedad.'); this.reset();" class="space-y-4">
+    <!-- Mensaje de éxito post-envío -->
+    <div id="contact-success" class="hidden bg-emerald-500/10 border border-emerald-500/30 p-6 rounded-2xl text-center mb-8">
+      <div class="text-4xl mb-3">✅</div>
+      <h3 class="text-lg font-bold text-white">¡Mensaje enviado con éxito!</h3>
+      <p class="text-xs text-slate-300 mt-2">
+        Hemos recibido tu consulta y te responderemos directamente a tu correo electrónico a la brevedad.
+      </p>
+      <button onclick="location.reload()" class="mt-4 px-4 py-2 bg-emerald-500 text-slate-950 font-bold text-xs rounded-xl">Enviar otro mensaje</button>
+    </div>
+
+    <!-- Formulario de contacto conectado directo a diego.zuniga.plazas@gmail.com -->
+    <div id="contact-form-card" class="bg-slate-900/40 border border-slate-800 p-6 sm:p-8 rounded-2xl shadow-xl">
+      <form id="contact-form" class="space-y-4">
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Nombre Completo</label>
-          <input type="text" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition" placeholder="Tu nombre">
+          <input type="text" name="name" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition" placeholder="Tu nombre">
         </div>
         <div>
-          <label class="block text-xs font-bold text-slate-300 mb-1">Correo Electrónico</label>
-          <input type="email" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition" placeholder="tu@correo.com">
+          <label class="block text-xs font-bold text-slate-300 mb-1">Tu Correo Electrónico</label>
+          <input type="email" name="email" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition" placeholder="tu@correo.com">
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Motivo del Mensaje</label>
-          <select class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-slate-300 focus:outline-none transition">
-            <option>Sugerencia de nueva oferta o tienda</option>
-            <option>Reportar enlace expirado o caído</option>
-            <option>Pregunta general sobre el servicio</option>
-            <option>Alianzas / Publicidad</option>
+          <select name="subject" class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-slate-300 focus:outline-none transition">
+            <option value="Sugerencia de nueva oferta o tienda">Sugerencia de nueva oferta o tienda</option>
+            <option value="Reportar enlace expirado o caído">Reportar enlace expirado o caído</option>
+            <option value="Pregunta general sobre el servicio">Pregunta general sobre el servicio</option>
+            <option value="Alianzas / Publicidad">Alianzas / Publicidad</option>
           </select>
         </div>
         <div>
           <label class="block text-xs font-bold text-slate-300 mb-1">Mensaje</label>
-          <textarea rows="4" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition" placeholder="Escribe tu mensaje aquí..."></textarea>
+          <textarea name="message" rows="4" required class="w-full bg-slate-950 border border-slate-800 focus:border-indigo-500 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none transition" placeholder="Escribe tu mensaje aquí..."></textarea>
         </div>
-        <button type="submit" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 transition">
-          Enviar Mensaje
+        <button type="submit" id="submit-btn" class="w-full py-3 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow-lg shadow-indigo-600/30 transition flex items-center justify-center gap-2">
+          <span>Enviar Mensaje</span>
         </button>
       </form>
     </div>
+
+    <script>
+      const form = document.getElementById('contact-form');
+      const submitBtn = document.getElementById('submit-btn');
+      const successBox = document.getElementById('contact-success');
+      const formCard = document.getElementById('contact-form-card');
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span>⏳ Enviando mensaje...</span>';
+
+        const formData = new FormData(form);
+        const data = {
+          name: formData.get('name'),
+          email: formData.get('email'),
+          _subject: `[FreeGames] ${formData.get('subject')} de ${formData.get('name')}`,
+          message: formData.get('message'),
+          _captcha: 'false'
+        };
+
+        try {
+          const res = await fetch('https://formsubmit.co/ajax/diego.zuniga.plazas@gmail.com', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify(data)
+          });
+
+          if (res.ok) {
+            formCard.classList.add('hidden');
+            successBox.classList.remove('hidden');
+          } else {
+            throw new Error('Error al enviar');
+          }
+        } catch (err) {
+          alert('Hubo un inconveniente al enviar. Por favor intenta de nuevo.');
+          submitBtn.disabled = false;
+          submitBtn.innerHTML = '<span>Enviar Mensaje</span>';
+        }
+      });
+    </script>
   </main>
 
   <footer class="border-t border-slate-800 py-6 text-center text-xs text-slate-500">
