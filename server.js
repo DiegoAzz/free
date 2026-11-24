@@ -14,6 +14,44 @@ const PORT = process.env.PORT || 3000;
 
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const DATA_FILE = path.join(__dirname, 'data', 'freebies.json');
+const STATS_FILE = path.join(__dirname, 'data', 'stats.json');
+
+// Motor ligero de análisis de tráfico interno
+function trackVisit(req, pathname) {
+  if (pathname.startsWith('/api') || (pathname.includes('.') && !pathname.endsWith('.html'))) return;
+  if (pathname.includes('stats')) return; // No contar visitas al propio panel
+  
+  const today = new Date().toISOString().split('T')[0];
+  const refHeader = (req.headers['referer'] || req.headers['referrer'] || '').toLowerCase();
+  let source = 'Directo / Otro';
+  if (refHeader.includes('facebook') || refHeader.includes('fb.me')) source = 'Facebook';
+  else if (refHeader.includes('t.me') || refHeader.includes('telegram')) source = 'Telegram';
+  else if (refHeader.includes('whatsapp')) source = 'WhatsApp';
+  else if (refHeader.includes('google')) source = 'Google';
+
+  const userAgent = (req.headers['user-agent'] || '').toLowerCase();
+  const isMobile = /mobile|iphone|android|ipad/.test(userAgent);
+
+  let stats = { totalViews: 0, byDate: {}, sources: {}, devices: { mobile: 0, desktop: 0 } };
+  try {
+    if (fs.existsSync(STATS_FILE)) {
+      stats = JSON.parse(fs.readFileSync(STATS_FILE, 'utf8'));
+    }
+  } catch (e) {}
+
+  stats.totalViews = (stats.totalViews || 0) + 1;
+  stats.byDate = stats.byDate || {};
+  stats.byDate[today] = (stats.byDate[today] || 0) + 1;
+  stats.sources = stats.sources || {};
+  stats.sources[source] = (stats.sources[source] || 0) + 1;
+  stats.devices = stats.devices || { mobile: 0, desktop: 0 };
+  if (isMobile) stats.devices.mobile = (stats.devices.mobile || 0) + 1;
+  else stats.devices.desktop = (stats.devices.desktop || 0) + 1;
+
+  try {
+    fs.writeFileSync(STATS_FILE, JSON.stringify(stats, null, 2), 'utf8');
+  } catch (e) {}
+}
 
 // 1. Verificación inicial de datos
 if (!fs.existsSync(DATA_FILE)) {
@@ -59,6 +97,9 @@ const server = http.createServer(async (req, res) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
   res.setHeader('X-Content-Type-Options', 'nosniff');
 
+  // Registrar visita de usuario en tiempo real
+  trackVisit(req, url.pathname);
+
   if (req.method === 'OPTIONS') {
     res.writeHead(204);
     res.end();
@@ -82,6 +123,23 @@ const server = http.createServer(async (req, res) => {
       } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: 'Datos no encontrados' }));
+      }
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: err.message }));
+    }
+    return;
+  }
+
+  // API: Obtener estadísticas internas en tiempo real
+  if (url.pathname === '/api/stats' && req.method === 'GET') {
+    try {
+      if (fs.existsSync(STATS_FILE)) {
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(fs.readFileSync(STATS_FILE, 'utf8'));
+      } else {
+        res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+        res.end(JSON.stringify({ totalViews: 0, byDate: {}, sources: {}, devices: { mobile: 0, desktop: 0 } }));
       }
     } catch (err) {
       res.writeHead(500, { 'Content-Type': 'application/json' });

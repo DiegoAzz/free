@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Estadísticas en Vivo — FreeGames AppzPlay</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="/logo.svg">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>body { font-family: 'Plus Jakarta Sans', sans-serif; }</style>
+</head>
+<body class="bg-[#0B0F19] text-white min-h-screen p-4 sm:p-8 flex flex-col items-center">
+
+  <div class="max-w-4xl w-full">
+    
+    <!-- Cabecera -->
+    <div class="flex items-center justify-between border-b border-slate-800 pb-6 mb-8">
+      <div class="flex items-center gap-3">
+        <a href="/" class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/30">⚡</a>
+        <div>
+          <h1 class="text-xl font-bold text-white">Panel de Tráfico en Vivo</h1>
+          <p class="text-xs text-slate-400">Estadísticas internas en tiempo real sin necesidad de entrar a Google</p>
+        </div>
+      </div>
+      <button onclick="loadStats()" class="px-3.5 py-2 text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl border border-slate-700 transition flex items-center gap-1.5">
+        <span>🔄 Recargar</span>
+      </button>
+    </div>
+
+    <!-- Tarjetas Principales -->
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+      
+      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Visitas Hoy</span>
+        <div class="text-4xl font-extrabold text-emerald-400 mt-2" id="stat-today">0</div>
+        <span class="text-[11px] text-slate-500 mt-1 block">Personas que entraron hoy</span>
+      </div>
+
+      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Visitas Totales</span>
+        <div class="text-4xl font-extrabold text-indigo-400 mt-2" id="stat-total">0</div>
+        <span class="text-[11px] text-slate-500 mt-1 block">Desde el lanzamiento</span>
+      </div>
+
+      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
+        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Dispositivo Principal</span>
+        <div class="text-2xl font-bold text-white mt-2 flex items-center gap-2">
+          <span id="stat-device">📱 Celulares</span>
+        </div>
+        <span class="text-[11px] text-slate-500 mt-1 block" id="stat-device-detail">Móviles vs Computadores</span>
+      </div>
+
+    </div>
+
+    <!-- Desglose de Fuentes de Tráfico -->
+    <div class="bg-slate-900/40 border border-slate-800 p-6 sm:p-8 rounded-2xl">
+      <h2 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+        <span>🌐 ¿De dónde llegan tus visitantes?</span>
+      </h2>
+      <div id="sources-container" class="space-y-3">
+        <!-- Inyectado por JS -->
+      </div>
+    </div>
+
+    <div class="mt-8 text-center text-xs text-slate-600">
+      FreeGames AppzPlay Analytics Engine &bull; Actualizado en tiempo real
+    </div>
+
+  </div>
+
+  <script>
+    async function loadStats() {
+      try {
+        const res = await fetch('/api/stats');
+        const data = await res.json();
+        
+        const todayKey = new Date().toISOString().split('T')[0];
+        const todayViews = data.byDate?.[todayKey] || 0;
+        
+        document.getElementById('stat-today').innerText = todayViews.toLocaleString('es-CO');
+        document.getElementById('stat-total').innerText = (data.totalViews || 0).toLocaleString('es-CO');
+
+        // Dispositivos
+        const mob = data.devices?.mobile || 0;
+        const desk = data.devices?.desktop || 0;
+        const totalDev = mob + desk || 1;
+        const mobPct = Math.round((mob / totalDev) * 100);
+        document.getElementById('stat-device').innerText = mob >= desk ? `📱 ${mobPct}% Móvil` : `💻 ${100 - mobPct}% PC`;
+        document.getElementById('stat-device-detail').innerText = `${mob} desde celulares • ${desk} desde computadores`;
+
+        // Fuentes
+        const sourcesDiv = document.getElementById('sources-container');
+        const sources = data.sources || {};
+        const entries = Object.entries(sources).sort((a,b) => b[1] - a[1]);
+        
+        if (entries.length === 0) {
+          sourcesDiv.innerHTML = '<p class="text-xs text-slate-500">Esperando primeras visitas...</p>';
+          return;
+        }
+
+        const maxVal = Math.max(...entries.map(e => e[1])) || 1;
+        
+        sourcesDiv.innerHTML = entries.map(([name, count]) => {
+          const pct = Math.round((count / (data.totalViews || 1)) * 100);
+          const icon = name.includes('Facebook') ? '🔵 Facebook' :
+                       name.includes('Telegram') ? '✈️ Telegram' :
+                       name.includes('WhatsApp') ? '🟢 WhatsApp' :
+                       name.includes('Google') ? '🔴 Google' : '🔗 Enlace Directo';
+
+          return `
+            <div class="flex items-center justify-between text-xs py-2 border-b border-slate-800/60 last:border-0">
+              <span class="font-semibold text-slate-200">${icon}</span>
+              <div class="flex items-center gap-3">
+                <div class="w-32 bg-slate-800 rounded-full h-2 overflow-hidden hidden sm:block">
+                  <div class="bg-indigo-500 h-2 rounded-full" style="width: ${(count / maxVal) * 100}%"></div>
+                </div>
+                <span class="font-bold text-white">${count} visitas (${pct}%)</span>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+      } catch (err) {
+        console.error('Error cargando estadísticas:', err);
+      }
+    }
+
+    loadStats();
+    setInterval(loadStats, 10000); // Refresca solo cada 10 segundos
+  </script>
+</body>
+</html>
