@@ -9,7 +9,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const TOKEN = process.env.TELEGRAM_BOT_TOKEN || '9223172643:AAEuLO-u8-G2FeLr8wCMdy7c8CzDmkd8zx4';
-const CHANNEL = process.env.TELEGRAM_CHANNEL || '@freegames_appzplay';
+const CHANNEL = process.env.TELEGRAM_CHANNEL || '-1003977678358';
 
 const POSTED_FILE = path.join(__dirname, 'data', 'telegram-posted.json');
 const FREEBIES_FILE = path.join(__dirname, 'data', 'freebies.json');
