@@ -37,10 +37,11 @@
         <span class="text-[11px] text-slate-500 mt-1 block">Personas que entraron hoy</span>
       </div>
 
-      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
-        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Visitas Totales</span>
+      <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl pointer-events-none"></div>
+        <span class="text-xs font-bold text-indigo-400 uppercase tracking-wider">Acumulado Total</span>
         <div class="text-4xl font-extrabold text-indigo-400 mt-2" id="stat-total">0</div>
-        <span class="text-[11px] text-slate-500 mt-1 block">Desde el lanzamiento</span>
+        <span class="text-[11px] text-slate-400 mt-1 block">Todas las visitas históricas</span>
       </div>
 
       <div class="bg-slate-900/60 border border-slate-800 p-6 rounded-2xl">
@@ -53,14 +54,28 @@
 
     </div>
 
-    <!-- Desglose de Fuentes de Tráfico -->
-    <div class="bg-slate-900/40 border border-slate-800 p-6 sm:p-8 rounded-2xl">
-      <h2 class="text-base font-bold text-white mb-4 flex items-center gap-2">
-        <span>🌐 ¿De dónde llegan tus visitantes?</span>
-      </h2>
-      <div id="sources-container" class="space-y-3">
-        <!-- Inyectado por JS -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+      
+      <!-- Desglose de Fuentes de Tráfico -->
+      <div class="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
+        <h2 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+          <span>🌐 ¿De dónde llegan tus visitantes?</span>
+        </h2>
+        <div id="sources-container" class="space-y-3">
+          <!-- Inyectado por JS -->
+        </div>
       </div>
+
+      <!-- Acumulado e Historial por Día -->
+      <div class="bg-slate-900/40 border border-slate-800 p-6 rounded-2xl">
+        <h2 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+          <span>📅 Historial Acumulado por Día</span>
+        </h2>
+        <div id="dates-container" class="space-y-3 max-h-64 overflow-y-auto pr-1">
+          <!-- Inyectado por JS -->
+        </div>
+      </div>
+
     </div>
 
     <div class="mt-8 text-center text-xs text-slate-600">
@@ -96,30 +111,54 @@
         
         if (entries.length === 0) {
           sourcesDiv.innerHTML = '<p class="text-xs text-slate-500">Esperando primeras visitas...</p>';
-          return;
+        } else {
+          const maxVal = Math.max(...entries.map(e => e[1])) || 1;
+          sourcesDiv.innerHTML = entries.map(([name, count]) => {
+            const pct = Math.round((count / (data.totalViews || 1)) * 100);
+            const icon = name.includes('Facebook') ? '🔵 Facebook' :
+                         name.includes('Telegram') ? '✈️ Telegram' :
+                         name.includes('WhatsApp') ? '🟢 WhatsApp' :
+                         name.includes('Google') ? '🔴 Google' : '🔗 Enlace Directo';
+
+            return `
+              <div class="flex items-center justify-between text-xs py-2 border-b border-slate-800/60 last:border-0">
+                <span class="font-semibold text-slate-200">${icon}</span>
+                <div class="flex items-center gap-3">
+                  <div class="w-24 bg-slate-800 rounded-full h-2 overflow-hidden hidden sm:block">
+                    <div class="bg-indigo-500 h-2 rounded-full" style="width: ${(count / maxVal) * 100}%"></div>
+                  </div>
+                  <span class="font-bold text-white">${count} (${pct}%)</span>
+                </div>
+              </div>
+            `;
+          }).join('');
         }
 
-        const maxVal = Math.max(...entries.map(e => e[1])) || 1;
-        
-        sourcesDiv.innerHTML = entries.map(([name, count]) => {
-          const pct = Math.round((count / (data.totalViews || 1)) * 100);
-          const icon = name.includes('Facebook') ? '🔵 Facebook' :
-                       name.includes('Telegram') ? '✈️ Telegram' :
-                       name.includes('WhatsApp') ? '🟢 WhatsApp' :
-                       name.includes('Google') ? '🔴 Google' : '🔗 Enlace Directo';
+        // Historial por Día
+        const datesDiv = document.getElementById('dates-container');
+        const byDate = data.byDate || {};
+        const dateEntries = Object.entries(byDate).sort((a, b) => b[0].localeCompare(a[0])); // más reciente primero
 
-          return `
-            <div class="flex items-center justify-between text-xs py-2 border-b border-slate-800/60 last:border-0">
-              <span class="font-semibold text-slate-200">${icon}</span>
-              <div class="flex items-center gap-3">
-                <div class="w-32 bg-slate-800 rounded-full h-2 overflow-hidden hidden sm:block">
-                  <div class="bg-indigo-500 h-2 rounded-full" style="width: ${(count / maxVal) * 100}%"></div>
+        if (dateEntries.length === 0) {
+          datesDiv.innerHTML = '<p class="text-xs text-slate-500">Aún no hay días registrados.</p>';
+        } else {
+          const maxDateVal = Math.max(...dateEntries.map(e => e[1])) || 1;
+          datesDiv.innerHTML = dateEntries.map(([d, count]) => {
+            const [y, m, day] = d.split('-');
+            const formattedDate = `${day}/${m}/${y}`;
+            return `
+              <div class="flex items-center justify-between text-xs py-2 border-b border-slate-800/60 last:border-0">
+                <span class="font-mono text-slate-300 font-semibold">📅 ${formattedDate}</span>
+                <div class="flex items-center gap-3">
+                  <div class="w-24 bg-slate-800 rounded-full h-2 overflow-hidden hidden sm:block">
+                    <div class="bg-emerald-500 h-2 rounded-full" style="width: ${(count / maxDateVal) * 100}%"></div>
+                  </div>
+                  <span class="font-bold text-emerald-400">${count} visitas</span>
                 </div>
-                <span class="font-bold text-white">${count} visitas (${pct}%)</span>
               </div>
-            </div>
-          `;
-        }).join('');
+            `;
+          }).join('');
+        }
 
       } catch (err) {
         console.error('Error cargando estadísticas:', err);
