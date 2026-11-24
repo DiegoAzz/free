@@ -6,6 +6,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runFetcher } from './fetcher.js';
+import { broadcastNewDeals } from './telegram.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -20,13 +21,17 @@ if (!fs.existsSync(DATA_FILE)) {
   await runFetcher();
 }
 
-// 2. Tarea automática programada interna (Coolify): Se actualiza solo cada 4 horas
+// 2. Tarea automática programada interna (Coolify): Se actualiza y publica solo cada 4 horas
 const FOUR_HOURS_MS = 4 * 60 * 60 * 1000;
 setInterval(async () => {
   console.log('⏰ [Cron Interno] Actualizando promociones y regalos automáticamente...');
   try {
     await runFetcher();
     console.log('✅ [Cron Interno] Datos actualizados con éxito.');
+    
+    // Publicar automáticamente ofertas nuevas en Telegram
+    console.log('📢 [Telegram] Enviando ofertas nuevas al canal...');
+    await broadcastNewDeals(2);
   } catch (err) {
     console.error('❌ [Cron Interno] Error al actualizar:', err.message);
   }
@@ -92,6 +97,20 @@ const server = http.createServer(async (req, res) => {
       const updated = await runFetcher();
       res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
       res.end(JSON.stringify(updated));
+    } catch (err) {
+      res.writeHead(500, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({ error: err.message }));
+    }
+    return;
+  }
+
+  // API: Publicar ofertas en Telegram manualmente
+  if (url.pathname === '/api/telegram/broadcast' && (req.method === 'POST' || req.method === 'GET')) {
+    try {
+      console.log('📢 Disparando publicación en Telegram...');
+      const resTelegram = await broadcastNewDeals(1);
+      res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8' });
+      res.end(JSON.stringify({ success: true, published: resTelegram }));
     } catch (err) {
       res.writeHead(500, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify({ error: err.message }));
