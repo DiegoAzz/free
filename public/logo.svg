@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <defs>
+    <!-- Gradientes -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B0F19" />
+      <stop offset="50%" stop-color="#111827" />
+      <stop offset="100%" stop-color="#050811" />
+    </linearGradient>
+
+    <linearGradient id="neonBolt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" />
+      <stop offset="50%" stop-color="#06B6D4" />
+      <stop offset="100%" stop-color="#6366F1" />
+    </linearGradient>
+
+    <linearGradient id="controllerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366F1" />
+      <stop offset="50%" stop-color="#8B5CF6" />
+      <stop offset="100%" stop-color="#EC4899" />
+    </linearGradient>
+
+    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10B981" stop-opacity="0.8" />
+      <stop offset="50%" stop-color="#6366F1" stop-opacity="0.8" />
+      <stop offset="100%" stop-color="#EC4899" stop-opacity="0.8" />
+    </linearGradient>
+
+    <!-- Filtro de Resplandor Neón -->
+    <filter id="neonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="24" result="blur1" />
+      <feGaussianBlur stdDeviation="12" result="blur2" />
+      <feMerge>
+        <feMergeNode in="blur1" />
+        <feMergeNode in="blur2" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="ambientGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="70" />
+    </filter>
+  </defs>
+
+  <!-- Fondo Icono Squircle (iOS / Android / Telegram App Icon Style) -->
+  <rect x="32" y="32" width="960" height="960" rx="220" fill="url(#bgGrad)" stroke="url(#borderGrad)" stroke-width="8" />
+
+  <!-- Luces ambientales de fondo -->
+  <circle cx="360" cy="400" r="180" fill="#6366F1" opacity="0.25" filter="url(#ambientGlow)" />
+  <circle cx="660" cy="580" r="180" fill="#10B981" opacity="0.22" filter="url(#ambientGlow)" />
+  <circle cx="512" cy="512" r="120" fill="#EC4899" opacity="0.15" filter="url(#ambientGlow)" />
+
+  <!-- Escudo / Hexágono Tecnológico Central -->
+  <polygon points="512,180 780,335 780,645 512,800 244,645 244,335" 
+           fill="none" 
+           stroke="url(#borderGrad)" 
+           stroke-width="12" 
+           stroke-linecap="round" 
+           stroke-linejoin="round"
+           opacity="0.4" />
+
+  <!-- Silueta geométrica de mando gamer (Controller) -->
+  <g filter="url(#neonGlow)">
+    <!-- Contorno Mando -->
+    <path d="M 330,420 
+             C 330,340 400,320 512,320 
+             C 624,320 694,340 694,420 
+             C 694,470 660,560 620,670 
+             C 590,750 510,720 480,650 
+             C 460,610 440,610 420,650 
+             C 390,720 310,750 280,670 
+             C 240,560 330,470 330,420 Z" 
+          fill="#131B2E" 
+          stroke="url(#controllerGrad)" 
+          stroke-width="18" 
+          stroke-linejoin="round" />
+
+    <!-- D-Pad (Cruceta Gamer Izquierda) -->
+    <rect x="350" y="445" width="22" height="66" rx="6" fill="#06B6D4" />
+    <rect x="328" y="467" width="66" height="22" rx="6" fill="#06B6D4" />
+
+    <!-- Botones de Acción Gamers (Derecha) -->
+    <circle cx="630" cy="455" r="14" fill="#EC4899" />
+    <circle cx="665" cy="485" r="14" fill="#10B981" />
+    <circle cx="595" cy="485" r="14" fill="#F59E0B" />
+    <circle cx="630" cy="515" r="14" fill="#6366F1" />
+  </g>
+
+  <!-- RAYO NEÓN CENTRAL (Eléctrico y Enérgico de FreeGames) -->
+  <g filter="url(#neonGlow)">
+    <polygon points="535,210 390,510 495,510 445,790 645,460 520,460" 
+             fill="url(#neonBolt)" 
+             stroke="#FFFFFF" 
+             stroke-width="6" 
+             stroke-linejoin="round" />
+  </g>
+
+  <!-- Puntos decorativos y acentos de brillo -->
+  <circle cx="512" cy="210" r="10" fill="#FFFFFF" filter="url(#neonGlow)" />
+  <circle cx="445" cy="790" r="10" fill="#10B981" filter="url(#neonGlow)" />
+</svg>
