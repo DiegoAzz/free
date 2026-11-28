@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-11-27T20:53:36.385Z",
-  "totalCount": 119,
-  "estimatedSavingsUSD": 2433,
+  "updatedAt": "2026-11-28T06:20:41.556Z",
+  "totalCount": 124,
+  "estimatedSavingsUSD": 2461,
   "items": [
     {
       "id": "epic_0623017cf9f341efbe07557f46beb4e8",
@@ -77,6 +77,54 @@
       "startDate": "2026-11-21T16:00:00.000Z",
       "status": "active",
       "source": "Epic Games"
+    },
+    {
+      "id": "gp_3863",
+      "title": "Lonely in the Winter (itch.io) Giveaway",
+      "category": "juegos",
+      "platform": "PC, Itch.io, DRM-Free",
+      "originalPrice": "$2.99",
+      "currentPrice": "¡GRATIS!",
+      "thumbnail": "https://www.gamerpower.com/offers/1b/6b0a113ba497d.jpg",
+      "claimUrl": "https://www.gamerpower.com/open/lonely-in-the-winter-itch-io-giveaway",
+      "description": "Claim Lonely in the Winter for free via itch.io! Lonely in the Winter is a small 2d rpg game with casual gameplay.",
+      "instructions": "1. Click the \"Get Giveaway\" button to visit the giveaway page.\r\n2. Click the button \"Download or Claim\" before the offer expires.\r\n3. Login into your itch.io account to access the game.",
+      "expiryDate": "2026-12-06 23:59:00",
+      "status": "active",
+      "publishedAt": "2026-11-27 18:24:43",
+      "source": "GamerPower"
+    },
+    {
+      "id": "gp_3862",
+      "title": "Ba Bị (itch.io) Giveaway",
+      "category": "juegos",
+      "platform": "PC, Itch.io",
+      "originalPrice": "$4.99",
+      "currentPrice": "¡GRATIS!",
+      "thumbnail": "https://www.gamerpower.com/offers/1b/6b0a1024d09c7.jpg",
+      "claimUrl": "https://www.gamerpower.com/open/n-a",
+      "description": "Download Ba Bị for free on itch.io! Ba Bị 3D is a puzzle game based on Vietnamese folklore.",
+      "instructions": "1. Click the \"Get Giveaway\" button to visit the giveaway page.\r\n2. Click the button \"Download or Claim\" before the offer expires.\r\n3. Login into your itch.io account to access the game.",
+      "expiryDate": "2026-12-04 23:59:00",
+      "status": "active",
+      "publishedAt": "2026-11-27 18:20:04",
+      "source": "GamerPower"
+    },
+    {
+      "id": "gp_3861",
+      "title": "Rulebound (itch.io) Giveaway",
+      "category": "juegos",
+      "platform": "PC, Itch.io",
+      "originalPrice": "$6.99",
+      "currentPrice": "¡GRATIS!",
+      "thumbnail": "https://www.gamerpower.com/offers/1b/6b0a0de4276dc.jpg",
+      "claimUrl": "https://www.gamerpower.com/open/rulebound-itch-io-giveaway",
+      "description": "Score Rulebound for free via itch.io! Rulebound is a 3d surreal incremental game where survival depends on split attention.",
+      "instructions": "1. Click the \"Get Giveaway\" button to visit the giveaway page.\r\n2. Click the button \"Download or Claim\" before the offer expires.\r\n3. Login into your itch.io account to access the game.",
+      "expiryDate": "2026-12-31 23:59:00",
+      "status": "active",
+      "publishedAt": "2026-11-27 18:10:28",
+      "source": "GamerPower"
     },
     {
       "id": "gp_3334",
@@ -463,6 +511,22 @@
       "source": "GamerPower"
     },
     {
+      "id": "gp_2478",
+      "title": "Boots Quest DX (itch.io) Giveaway",
+      "category": "juegos",
+      "platform": "PC, Itch.io",
+      "originalPrice": "$9.99",
+      "currentPrice": "¡GRATIS!",
+      "thumbnail": "https://www.gamerpower.com/offers/1b/64cd77c7ac5fe.jpg",
+      "claimUrl": "https://www.gamerpower.com/open/boots-quest-dx-itch-io-giveaway",
+      "description": "Download Boots Quest DX for free on itch.io! Boots Quest DX is a small adventure game with lots of puzzles and items to collect!",
+      "instructions": "1. Click the button to visit the giveaway page.\r\n2. Download directly via itch.io before the offer expires.\r\n3. It´s that easy! Enjoy the game!",
+      "expiryDate": "2026-11-30 23:59:59",
+      "status": "active",
+      "publishedAt": "2026-07-31 12:10:25",
+      "source": "GamerPower"
+    },
+    {
       "id": "gp_3719",
       "title": "Fantasy Grounds Dragons NPC Dice Pack Volume 1 Steam Key Giveaway",
       "category": "loot",
@@ -524,6 +588,22 @@
       "expiryDate": null,
       "status": "active",
       "publishedAt": "2026-07-06 13:58:53",
+      "source": "GamerPower"
+    },
+    {
+      "id": "gp_2109",
+      "title": "Tim-Tim 2: The Almighty Gnome (itch.io) Giveaway",
+      "category": "juegos",
+      "platform": "PC",
+      "originalPrice": "$3.99",
+      "currentPrice": "¡GRATIS!",
+      "thumbnail": "https://www.gamerpower.com/offers/1b/63a7d58806279.jpg",
+      "claimUrl": "https://www.gamerpower.com/open/tim-tim-2-the-almighty-gnome-itch-io-giveaway",
+      "description": "Score Tim-Tim 2: The Almighty Gnome for free on itch.io! Tim-Tim 2: The Almighty Gnome is a 2d adventure game with over 100 maps to explore.",
+      "instructions": "1. Click the button \"Download or Claim\" before the offer expires.\r\n2. Login into your itch.io account to unlock and access the game.",
+      "expiryDate": "2026-12-02 23:59:01",
+      "status": "active",
+      "publishedAt": "2026-07-02 09:13:34",
       "source": "GamerPower"
     },
     {
